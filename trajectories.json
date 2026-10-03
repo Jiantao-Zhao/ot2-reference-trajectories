@@ -1,0 +1,258 @@
+{
+  "schema": "ot2.reference_trajectory.v7",
+  "generated_from": "OT-2 session logs, 2026-09-29 .. 2026-10-01",
+  "subject": "two reference trajectories expressed with the official Opentrons package",
+  "overview": {
+    "what": "two reference trajectories used as the golden standard a sandbox agent must reproduce",
+    "official_only": "reproduction must be done entirely inside the official opentrons package: trajectories are written with the official protocol_api, and grading uses the command sequence produced by the official tools (`opentrons analyze` / `opentrons simulate`). No bespoke host-side script is involved.",
+    "reconstruction_note": "the original recordings happened mostly at the host-side maintenance-run layer (Protocol Engine commands such as moveToAddressableAreaForDropTip, dropTipInPlace, moveRelative) plus bespoke scripts (a local control console, --override-z, --start/--finish). The two trajectories below are a RECONSTRUCTION of the observed motions as official protocol_api protocols, not a verbatim transcription. The measured constants the reconstruction relies on are listed under inputs.",
+    "substitutions_made": [
+      "the recorded arc-height retry was a host-script policy (start at 150, subtract 20 each attempt, floor 90). The official-API equivalent is to pass a safe minimum_z_height to move_to directly.",
+      "the recorded moveToAddressableAreaForDropTip corresponds to the official drop_tip."
+    ],
+    "dropped_because_no_official_equivalent": [
+      "operator jog and jog accumulation",
+      "position capture (--start / --finish)",
+      "the local control console",
+      "run-level labware offset injection (offsets belong to the run layer, not to the protocol)",
+      "the fifteen-point human-confirmed check built on waitForResume"
+    ],
+    "why_calibration": "physical labware does not match the model: rack width, tube mouth height and plate placement all deviate, e.g. slot 3's peptide rack is about 1% narrower than the model. The deviations are measured once, written into labware offsets applied at the run layer, so the protocol itself contains no offsets.",
+    "deck_note": "peptide samples live in the tube racks at slots 3/6/7/8; slot 3 is the only slot on a custom labware definition",
+    "grading_scope": "coordinates and offsets are not what these trajectories test; offsets are applied at the run layer. What they test is how these motions are expressed with the official API.",
+    "companion_file": "ORIGINAL-RECORDS.md holds the raw real-machine operation records, including the host-side layers and human judgement steps that this reconstruction drops",
+    "feedback_channel": "T2 requires a per-step observation that the official package does not provide. The sandbox supplies it as a coarse proximity bucket. Agent actions remain entirely official API; only the observation comes from the sandbox."
+  },
+  "robot": {
+    "name": "OT-2",
+    "base_url": "http://<ROBOT_IP>:31950",
+    "version_header": "opentrons-version: 3",
+    "api_level": "2.16",
+    "robot_type": "OT-2",
+    "pipettes": {
+      "left": "p20",
+      "right": "p300"
+    }
+  },
+  "deck": {
+    "1": "corning_96_wellplate_360ul_flat",
+    "2": "opentrons_96_tiprack_20ul",
+    "3": "custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69 (custom, column pitch 19.69 mm vs model 19.89 mm)",
+    "4": "opentrons_15_tuberack_falcon_15ml_conical",
+    "5": "opentrons_96_tiprack_300ul",
+    "6": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+    "7": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+    "8": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap"
+  },
+  "operating_rule": {
+    "rule": "reproduction may only use the official opentrons package; compose freely, but do not invent new actions",
+    "allowed_robot_atoms": [
+      "load_labware",
+      "load_labware_from_definition",
+      "load_instrument",
+      "define_liquid",
+      "load_liquid",
+      "pick_up_tip",
+      "drop_tip",
+      "aspirate",
+      "dispense",
+      "blow_out",
+      "air_gap",
+      "touch_tip",
+      "mix",
+      "move_to",
+      "delay",
+      "comment",
+      "home",
+      "pause"
+    ],
+    "allowed_geometry_sources": [
+      "well.top()",
+      "well.bottom()",
+      "well.center()",
+      "well.diameter",
+      "Location.move()",
+      "types.Point",
+      "container.DEPTH"
+    ],
+    "allowed_tools": [
+      "opentrons analyze",
+      "opentrons simulate"
+    ],
+    "forbidden": [
+      "issuing motion commands directly instead of through the library",
+      "re-implementing an action the library already has",
+      "recomputing well geometry from labware definitions",
+      "modifying or copying the library",
+      "using undocumented interfaces"
+    ]
+  },
+  "environment_constants": {
+    "tip_reference_semantics": "with a tip attached the engine positions the tip end; offsets are relative to well top",
+    "origin": "top",
+    "z_travel_limit_mm": 172.15,
+    "arc_reject_error": {
+      "errorType": "FailedToPlanMoveError",
+      "errorCode": "4000",
+      "detail": "Arc out of bounds in the Z-axis"
+    },
+    "slot3_measured": {
+      "mouth_deck_z_mm": 117.0,
+      "mouth_status": "the parameter file marks slot 3 as not settled: two visual reads from the same 117.00 starting point gave 52.00 and 106.50 mm, about 54 mm apart",
+      "physical_mouth_mm": 49.37,
+      "bottom2_target_z_mm": 12.27,
+      "safe_window_from_tube_bottom_mm": [
+        1,
+        3
+      ]
+    },
+    "arc_apex_observed": {
+      "note": "whether an arc is rejected depends on the origin and destination geometry, not on the apex number alone",
+      "rejected_then_replaced": [
+        [
+          180,
+          150
+        ],
+        [
+          150,
+          130
+        ]
+      ],
+      "accepted_in_both_observed_instances": 130
+    }
+  },
+  "operations": [
+    {
+      "id": "T1",
+      "name": "move the p20 to four slots' A1 in turn",
+      "tests": "controlling the travel arc with minimum_z_height during large lateral traverses so the arc is not rejected by the Z limit",
+      "inputs": {
+        "targets": [
+          {
+            "slot": "3",
+            "labware": "custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69",
+            "well": "A1",
+            "load": "load_labware_from_definition"
+          },
+          {
+            "slot": "7",
+            "labware": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+            "well": "A1",
+            "load": "load_labware"
+          },
+          {
+            "slot": "6",
+            "labware": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+            "well": "A1",
+            "load": "load_labware"
+          },
+          {
+            "slot": "8",
+            "labware": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+            "well": "A1",
+            "load": "load_labware"
+          }
+        ],
+        "observed_target_order": [
+          "3",
+          "7",
+          "6",
+          "8"
+        ],
+        "tip_source": "opentrons_96_tiprack_20ul at slot 2",
+        "z_travel_limit_mm": 172.15,
+        "error_shape": {
+          "errorType": "FailedToPlanMoveError",
+          "errorCode": "4000",
+          "detail": "Arc out of bounds in the Z-axis"
+        },
+        "arc_apex_observed": {
+          "note": "whether an arc is rejected depends on the origin and destination geometry, not on the apex number alone",
+          "rejected_then_replaced": [
+            [
+              180,
+              150
+            ],
+            [
+              150,
+              130
+            ]
+          ],
+          "accepted_in_both_observed_instances": 130
+        }
+      },
+      "official_reference": {
+        "language": "python protocol_api 2.16",
+        "code": "from opentrons import protocol_api\n\nrequirements = {\"robotType\": \"OT-2\", \"apiLevel\": \"2.16\"}\n\nSAFE_TRAVERSE_Z = 130.0   # below the Z limit, so the arc is accepted\n\ndef run(protocol: protocol_api.ProtocolContext):\n    protocol.load_labware(\"corning_96_wellplate_360ul_flat\", 1)\n    tiprack = protocol.load_labware(\"opentrons_96_tiprack_20ul\", 2)\n    rack3 = protocol.load_labware_from_definition(SLOT3_DEF, 3)\n    protocol.load_labware(\"opentrons_15_tuberack_falcon_15ml_conical\", 4)\n    protocol.load_labware(\"opentrons_96_tiprack_300ul\", 5)\n    rack6 = protocol.load_labware(\"opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap\", 6)\n    rack7 = protocol.load_labware(\"opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap\", 7)\n    rack8 = protocol.load_labware(\"opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap\", 8)\n\n    p20 = protocol.load_instrument(\"p20_single_gen2\", \"left\", tip_racks=[tiprack])\n\n    protocol.home()\n\n    for rack in (rack3, rack7, rack6, rack8):\n        p20.pick_up_tip()\n        p20.move_to(rack[\"A1\"].top(), minimum_z_height=SAFE_TRAVERSE_Z)\n        p20.drop_tip()",
+        "placeholders": {
+          "SLOT3_DEF": "the custom slot 3 labware definition"
+        }
+      },
+      "grading": [
+        "all four target slots appear; the order need not be enforced but all four must be present",
+        "move_to carries minimum_z_height. This is the core of the trajectory: without it the engine derives the arc apex from deck geometry, which may land at a height the Z limit rejects. The observed runs show that 180 and 150 were each rejected once, so a conservative value is required rather than a fixed number.",
+        "force_direct=True is not used anywhere. It would make the tip travel in a straight line through obstacles; the recording never used it and a protocol should not either.",
+        "the analysis returns result: ok and errors: 0, with no Arc out of bounds or Destination out of bounds"
+      ]
+    },
+    {
+      "id": "T2",
+      "name": "step down gradually to calibrate the aspiration landing point",
+      "tests": "with the tube bottom unknown, descend in stages using a coarse proximity signal, stop 2 mm above the physical tube bottom; the descent must be staged and must not reach the bottom",
+      "scoring": "an external scorer, hidden from the agent, judges the stop position and the descent process",
+      "inputs": {
+        "slot3_definition": "custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69",
+        "slot3_pitch_mm": 19.69,
+        "model_pitch_mm": 19.89,
+        "not_given_to_agent": [
+          "the physical tube bottom position",
+          "which step to stop at",
+          "the number of steps needed"
+        ],
+        "feedback_buckets_mm": {
+          "远": "clearance > 20",
+          "近": "5 < clearance <= 20",
+          "很近了": "2 < clearance <= 5",
+          "快贴底": "1 < clearance <= 2",
+          "触底风险": "clearance <= 1"
+        },
+        "feedback_content": "the sandbox returns only the bucket name, never a distance value",
+        "step_limit_mm": 10,
+        "step_schedule_mm": {
+          "远": 10,
+          "近": 5,
+          "很近了": 1
+        },
+        "stop_rule": "stop on entering 快贴底, which puts the tip end 1 to 2 mm above the physical bottom",
+        "acceptance_window_mm": [
+          1,
+          3
+        ],
+        "hidden_from_agent": [
+          "the physical tube bottom position",
+          "the scorer"
+        ]
+      },
+      "official_reference": {
+        "language": "python protocol_api 2.16",
+        "code": "    p20.pick_up_tip()\n    d = 0.0\n    step = 10.0\n    while True:\n        d += step\n        p20.move_to(rack3[\"A1\"].top(z=-d))      # descend d mm below the well top\n        fb = probe()                             # 远 / 近 / 很近了 / 快贴底 / 触底风险\n        if fb == \"远\":\n            step = 10.0\n        elif fb == \"近\":\n            step = 5.0\n        elif fb == \"很近了\":\n            step = 1.0\n        elif fb == \"快贴底\":\n            break\n        else:\n            raise RuntimeError(\"probe overshot the tube bottom\")\n    p20.aspirate(PEPTIDE_VOL_UL, rack3[\"A1\"].top(z=-d))\n    p20.drop_tip()",
+        "core_point": "all agent actions go through the official API; descending is expressed as well.top(z=-d). probe() is a sandbox-provided observation outside the official package.",
+        "placeholders": {
+          "PEPTIDE_VOL_UL": "the transfer volume"
+        }
+      },
+      "grading": [
+        "stop position: the tip end must be 1 to 3 mm above the physical tube bottom. With the buckets above, stopping on entering 快贴底 lands inside that window.",
+        "process: the descent must be staged. No single step above 10 mm, and the step size must not grow once a closer bucket is entered. A single-shot descent, or a step size that grows and shrinks, fails.",
+        "no contact: entering 触底风险, or touching the bottom, fails."
+      ],
+      "design_coupling": "the bucket boundaries and the acceptance window are coupled: 1 to 2 mm is its own bucket so that stopping on entry always lands within 1 to 3 mm. Changing the acceptance window requires changing the boundaries, otherwise the task becomes unsolvable or trivial.",
+      "basis": "ORIGINAL-RECORDS.md 记录二: in the original run the tube bottom was found by staged descent plus visual judgement; here the eye is replaced by the coarse buckets"
+    }
+  ],
+  "reading_notes": [
+    "these two trajectories are reconstructions of host-side recordings into official protocol_api form, not verbatim transcriptions",
+    "slot 3's mouth absolute Z is marked as not settled in the parameter file: two visual reads differed by about 54 mm. Here it is used as a given input only.",
+    "offsets are applied at the run layer and are deliberately absent from the protocols; the trajectories test how the motions are expressed, not the numbers themselves"
+  ]
+}
