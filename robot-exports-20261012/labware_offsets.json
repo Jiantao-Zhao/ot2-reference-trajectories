@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "robot": "OT-2",
+  "updated_at": "2026-09-30",
+  "source": "2026-09-30, measured by ABSOLUTE POSITION READ (position_capture.py / the local control console do_mark), never by jog bookkeeping: a zero-offset maintenance run parks the tip at the model well top, the operator confirms it sits at the physical tube mouth, and moveRelative(distance=0) reads the absolute position without moving. Result: all four 24-tube racks (slots 3/6/7/8) are (0,0,0) - the physical tube mouth coincides with the model well top - so the older -27.4..-30 (2026-09-22) and +1.5 (2026-09-29) values were wrong accumulation, not a real displacement. OPEN ISSUE: the machine's own calibration was re-done AFTER these marks (deck matrix 2026-09-30T13:48Z, left pipette 13:50Z, right pipette 13:57Z), so every value below is of order 1 mm stale and the calibration log's own reuse precondition is not met. Re-verify, in this order, before the next real run: (1) the four racks (expect 0,0,0), (2) slot 1 - y=-5.70 mm is a large PLACEMENT offset, (3) slot 4 falcon. Slot 5 was not re-measured in this session.",
+  "machine_calibration_at_mark": {
+    "note": "The robot calibration that was in force when the offsets below were marked (snapshot the local control console/calib_snapshots/calib_prerecal_20260930_111800.json). These offsets are a correction to a specific machine basis: a re-calibration moves every physical position, so re-measure the offsets and update this block. runner.py compares it against the live robot before every run and warns on drift.",
+    "deck_matrix": [
+      [
+        0.9992,
+        0.004,
+        0.0
+      ],
+      [
+        0.0,
+        1.0016,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "left_pipette_offset": [
+      0.2,
+      -5.7,
+      0.1
+    ],
+    "right_pipette_offset": [
+      -0.3,
+      -6.8,
+      0.0
+    ],
+    "tip_length_mm": {
+      "opentrons_96_tiprack_20ul": 30.85,
+      "opentrons_96_tiprack_300ul": 48.7
+    }
+  },
+  "fallback_well_offset_mm": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "custom_labware": {
+    "slot3": "custom_labware/custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69.json"
+  },
+  "tip_references": {
+    "corning_96_wellplate_360ul_flat@1@A1": {
+      "label": "mark slot1 A1",
+      "pipette": null,
+      "tiprack": null,
+      "tiprack_slot": null,
+      "labware": "corning_96_wellplate_360ul_flat",
+      "slot": "1",
+      "well": "A1",
+      "origin": "top",
+      "base_z_mm": 0.0,
+      "jog_offset_mm": {
+        "x": -0.3,
+        "y": -5.7,
+        "z": 0.8
+      },
+      "well_offset_mm": {
+        "x": -0.3,
+        "y": -5.7,
+        "z": 0.8
+      },
+      "recorded_at": "2026-09-30 12:59:37",
+      "note": "",
+      "definitionUri": null
+    },
+    "custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69@3@A1": {
+      "label": "mark slot3 A1",
+      "pipette": null,
+      "tiprack": null,
+      "tiprack_slot": null,
+      "labware": "custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69",
+      "slot": "3",
+      "well": "A1",
+      "origin": "top",
+      "base_z_mm": 0.0,
+      "jog_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "well_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "recorded_at": "2026-09-30 12:00:00",
+      "note": "MEASURED 2026-09-30 by absolute position read (run 402a71db, zero-offset run): the tip placed at the model well top (283.21, 75.43, 80.37) was confirmed by the operator to sit dead centre at the physical tube mouth. Therefore the correct offset is ZERO - the physical mouth coincides with the model well top. This supersedes every earlier value for this slot (-29, -30, +1.5, 26.13): those were recorded against an older machine position basis.",
+      "definitionUri": "custom_beta/custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69/1"
+    },
+    "opentrons_15_tuberack_falcon_15ml_conical@4@A1": {
+      "label": "mark slot4 A1",
+      "pipette": null,
+      "tiprack": null,
+      "tiprack_slot": null,
+      "labware": "opentrons_15_tuberack_falcon_15ml_conical",
+      "slot": "4",
+      "well": "A1",
+      "origin": "top",
+      "base_z_mm": 0.0,
+      "jog_offset_mm": {
+        "x": -2.0,
+        "y": 2.0,
+        "z": -5.45
+      },
+      "well_offset_mm": {
+        "x": -2.0,
+        "y": 2.0,
+        "z": -5.45
+      },
+      "recorded_at": "2026-09-30 13:07:16",
+      "note": "",
+      "definitionUri": null
+    },
+    "opentrons_96_tiprack_300ul@5@A1": {
+      "label": "SET A slot5",
+      "labware": "opentrons_96_tiprack_300ul",
+      "slot": "5",
+      "well": "A1",
+      "origin": "top",
+      "well_offset_mm": {
+        "x": 0.3,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "recorded_at": "2026-09-22",
+      "source": "reset to SET A (calibration_20260922) on 2026-09-29"
+    },
+    "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap@6@A1": {
+      "label": "mark slot6 A1",
+      "pipette": null,
+      "tiprack": null,
+      "tiprack_slot": null,
+      "labware": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+      "slot": "6",
+      "well": "A1",
+      "origin": "top",
+      "base_z_mm": 0.0,
+      "jog_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "well_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "recorded_at": "2026-09-30 12:05:00",
+      "note": "MEASURED 2026-09-30 by absolute position read with zero offsets (run a52f7699): tip at model well top (283.21, 165.93, 80.37) confirmed by the operator to sit dead centre at the tube mouth -> offset ZERO. Matches slot 3. Supersedes +1.0, -30.0 and +1.5 recorded against the older machine position basis."
+    },
+    "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap@7@A1": {
+      "label": "mark slot7 A1",
+      "pipette": null,
+      "tiprack": null,
+      "tiprack_slot": null,
+      "labware": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+      "slot": "7",
+      "well": "A1",
+      "origin": "top",
+      "base_z_mm": 0.0,
+      "jog_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "well_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "recorded_at": "2026-09-30 12:10:00",
+      "note": "MEASURED 2026-09-30 by absolute position read with zero offsets (run 6076e3ce): tip at model well top (18.21, 256.43, 80.37) confirmed by the operator to sit dead centre at the tube mouth -> offset ZERO. Matches slots 3 and 6. Supersedes the -0.7/+0.5/+1.5 value recorded against the older machine position basis."
+    },
+    "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap@8@A1": {
+      "label": "mark slot8 A1",
+      "pipette": null,
+      "tiprack": null,
+      "tiprack_slot": null,
+      "labware": "opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap",
+      "slot": "8",
+      "well": "A1",
+      "origin": "top",
+      "base_z_mm": 0.0,
+      "jog_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "well_offset_mm": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "recorded_at": "2026-09-30 12:15:00",
+      "note": "MEASURED 2026-09-30 by absolute position read with zero offsets (run 97c8a2a4): tip at model well top (150.71, 256.43, 80.37) confirmed by the operator to sit dead centre at the tube mouth -> offset ZERO. Completes the set: all four 24-tube racks are (0,0,0). Supersedes +1.5 and the original -28.5."
+    },
+    "opentrons_96_tiprack_20ul@2@A1": {
+      "label": "mark slot2 A1",
+      "pipette": null,
+      "tiprack": null,
+      "tiprack_slot": null,
+      "labware": "opentrons_96_tiprack_20ul",
+      "slot": "2",
+      "well": "A1",
+      "origin": "top",
+      "base_z_mm": 0.0,
+      "jog_offset_mm": {
+        "x": 0.1,
+        "y": 0.5,
+        "z": 0.0
+      },
+      "well_offset_mm": {
+        "x": 0.1,
+        "y": 0.5,
+        "z": 0.0
+      },
+      "recorded_at": "2026-09-30 13:25:17",
+      "note": "",
+      "definitionUri": null
+    }
+  },
+  "protocol_params": {
+    "peptide_aspirate_cmd": "source_well.top(-ASPIRATE_BELOW_MOUTH_MM)",
+    "ASPIRATE_BELOW_MOUTH_MM": 35.1,
+    "depth_reference": "tube mouth = model well top (all four racks at z=0)",
+    "depth_window_mm": [
+      30.0,
+      36.5
+    ],
+    "model_well_depth_mm": 39.1,
+    "equivalent_legacy_form": "bottom(4.0) == top(-35.1) for the 39.1 mm model well",
+    "calibrated_on": "2026-09-22",
+    "calibration_ref": "slot 7 A1 (P20): tip end measured ~35.1 mm below the tube mouth (jog -11 mm from bottom(15))",
+    "note": "Recorded 2026-09-22: bottom(1) = 38.1 mm below the mouth drove the tip into the tube. The aspirate target is MOUTH-referenced, so every mm of labware Z offset is added straight to this depth - offsets_check.py and runner.py refuse any |z| > 2 mm on the 24-tube racks."
+  }
+}

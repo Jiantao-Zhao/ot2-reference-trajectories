@@ -1,0 +1,384 @@
+{
+  "/health": {
+    "name": "OT-2",
+    "robot_model": "OT-2 Standard",
+    "api_version": "26.6.0",
+    "fw_version": "v1.1.0-25e5cea",
+    "board_revision": "A",
+    "logs": [
+      "/logs/serial.log",
+      "/logs/api.log",
+      "/logs/server.log",
+      "/logs/update_server.log"
+    ],
+    "system_version": "2025.02.7-13-g5d02a9e8",
+    "maximum_protocol_api_version": [
+      2,
+      28
+    ],
+    "minimum_protocol_api_version": [
+      2,
+      0
+    ],
+    "robot_serial": "ROBOT-SN",
+    "disk_details": {
+      "systemAvailableMb": 451.7109375,
+      "imagesDirectorySizeMb": 0.0
+    },
+    "links": {
+      "apiLog": "/logs/api.log",
+      "serialLog": "/logs/serial.log",
+      "serverLog": "/logs/server.log",
+      "apiSpec": "/openapi.json",
+      "systemTime": "/system/time"
+    }
+  },
+  "/calibration/status": {
+    "deckCalibration": {
+      "status": "OK",
+      "data": {
+        "type": "attitude",
+        "matrix": [
+          [
+            0.9992,
+            0.004,
+            0.0
+          ],
+          [
+            -0.0,
+            1.0016,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "lastModified": "2026-02-25T09:32:00.300104Z",
+        "pipetteCalibratedWith": "PIP-LEFT-P20",
+        "tiprack": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a",
+        "source": "user",
+        "status": {
+          "markedBad": false,
+          "source": null,
+          "markedAt": null
+        }
+      }
+    },
+    "instrumentCalibration": {
+      "right": {
+        "single": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "multi": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "left": {
+        "single": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "multi": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "/calibration/pipette_offset": {
+    "data": [
+      {
+        "id": "PIP-RIGHT-P300&right",
+        "pipette": "PIP-RIGHT-P300",
+        "mount": "right",
+        "offset": [
+          -0.29999999999999893,
+          -6.799999999999997,
+          1.4210854715202004e-14
+        ],
+        "tiprack": "ed323db6ca1ddf197aeb20667c1a7a91c89cfb2f931f45079d483928da056812",
+        "tiprackUri": "opentrons/opentrons_96_tiprack_300ul/1",
+        "lastModified": "2026-06-15T14:35:11.727077Z",
+        "source": "user",
+        "status": {
+          "markedBad": false,
+          "source": null,
+          "markedAt": null
+        }
+      },
+      {
+        "id": "PIP-LEFT-P20&left",
+        "pipette": "PIP-LEFT-P20",
+        "mount": "left",
+        "offset": [
+          0.20000000000000107,
+          -5.6999999999999975,
+          0.10000000000001563
+        ],
+        "tiprack": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a",
+        "tiprackUri": "opentrons/opentrons_96_tiprack_20ul/1",
+        "lastModified": "2026-06-02T12:24:27.53017Z",
+        "source": "user",
+        "status": {
+          "markedBad": false,
+          "source": null,
+          "markedAt": null
+        }
+      }
+    ],
+    "links": null
+  },
+  "/calibration/tip_length": {
+    "data": [
+      {
+        "id": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a&PIP-LEFT-P20",
+        "tipLength": 30.850000000000037,
+        "tiprack": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a",
+        "pipette": "PIP-LEFT-P20",
+        "lastModified": "2026-02-25T09:35:13.193026Z",
+        "source": "user",
+        "status": {
+          "markedBad": false,
+          "source": null,
+          "markedAt": null
+        },
+        "uri": "opentrons/opentrons_96_tiprack_20ul/1"
+      },
+      {
+        "id": "ed323db6ca1ddf197aeb20667c1a7a91c89cfb2f931f45079d483928da056812&PIP-RIGHT-P300",
+        "tipLength": 48.70000000000016,
+        "tiprack": "ed323db6ca1ddf197aeb20667c1a7a91c89cfb2f931f45079d483928da056812",
+        "pipette": "PIP-RIGHT-P300",
+        "lastModified": "2026-06-15T14:24:14.23389Z",
+        "source": "user",
+        "status": {
+          "markedBad": false,
+          "source": null,
+          "markedAt": null
+        },
+        "uri": "opentrons/opentrons_96_tiprack_300ul/1"
+      }
+    ],
+    "links": null
+  },
+  "/labwareOffsets": {
+    "data": [],
+    "meta": {
+      "cursor": 0,
+      "totalLength": 0
+    }
+  },
+  "/maintenance_runs/current_run": {
+    "data": {
+      "id": "e6d37afb-29ca-495d-a51a-5b38c3475cb9",
+      "createdAt": "2026-09-30T09:07:23.178859Z",
+      "status": "idle",
+      "current": true,
+      "actions": [],
+      "errors": [],
+      "hasEverEnteredErrorRecovery": false,
+      "pipettes": [
+        {
+          "id": "72f28eaf-7055-47c5-8efe-aee99a070c30",
+          "pipetteName": "p20_single_gen2",
+          "mount": "left"
+        },
+        {
+          "id": "66fe5479-cd81-4b18-9a4d-de7f483c2658",
+          "pipetteName": "p300_single_gen2",
+          "mount": "right"
+        }
+      ],
+      "modules": [],
+      "labware": [
+        {
+          "id": "a841a7a4-bdda-414f-b93c-e04a8891d5db",
+          "loadName": "opentrons_96_tiprack_20ul",
+          "definitionUri": "opentrons/opentrons_96_tiprack_20ul/1",
+          "location": {
+            "slotName": "2"
+          },
+          "offsetId": "6d7f6c4b-f774-454b-9898-4696efa108f2"
+        },
+        {
+          "id": "8aef4b47-f7de-41dc-98a2-804a0e0d160d",
+          "loadName": "custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69",
+          "definitionUri": "custom_beta/custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69/1",
+          "location": {
+            "slotName": "3"
+          },
+          "offsetId": "7683f959-074e-496c-ad7d-df4d92c3c46a"
+        }
+      ],
+      "liquids": [],
+      "liquidClasses": [],
+      "labwareOffsets": [
+        {
+          "id": "169f49ec-ff64-4f1d-ae84-e9637743cb6b",
+          "createdAt": "2026-09-30T09:07:23.218358Z",
+          "definitionUri": "opentrons/corning_96_wellplate_360ul_flat/2",
+          "location": {
+            "slotName": "1"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "1"
+            }
+          ],
+          "vector": {
+            "x": 0.0,
+            "y": 0.6,
+            "z": 0.0
+          }
+        },
+        {
+          "id": "6d7f6c4b-f774-454b-9898-4696efa108f2",
+          "createdAt": "2026-09-30T09:07:23.219626Z",
+          "definitionUri": "opentrons/opentrons_96_tiprack_20ul/1",
+          "location": {
+            "slotName": "2"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "2"
+            }
+          ],
+          "vector": {
+            "x": 0.20000000000000004,
+            "y": 0.4999999999999999,
+            "z": 0.0
+          }
+        },
+        {
+          "id": "7683f959-074e-496c-ad7d-df4d92c3c46a",
+          "createdAt": "2026-09-30T09:07:23.220603Z",
+          "definitionUri": "custom_beta/custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69/1",
+          "location": {
+            "slotName": "3"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "3"
+            }
+          ],
+          "vector": {
+            "x": 0.2,
+            "y": 0.0,
+            "z": 36.63
+          }
+        },
+        {
+          "id": "1609de03-f87b-4d5a-b258-3b6f4a02bf39",
+          "createdAt": "2026-09-30T09:07:23.221508Z",
+          "definitionUri": "opentrons/opentrons_15_tuberack_falcon_15ml_conical/1",
+          "location": {
+            "slotName": "4"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "4"
+            }
+          ],
+          "vector": {
+            "x": -1.2,
+            "y": 4.1,
+            "z": 25.5
+          }
+        },
+        {
+          "id": "16623d0c-4da0-4576-90ab-514fed4eddaa",
+          "createdAt": "2026-09-30T09:07:23.222402Z",
+          "definitionUri": "opentrons/opentrons_96_tiprack_300ul/1",
+          "location": {
+            "slotName": "5"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "5"
+            }
+          ],
+          "vector": {
+            "x": 0.3,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        {
+          "id": "6cc8edc0-5744-40d2-b4dd-a8ec5e9a4342",
+          "createdAt": "2026-09-30T09:07:23.223292Z",
+          "definitionUri": "opentrons/opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap/1",
+          "location": {
+            "slotName": "6"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "6"
+            }
+          ],
+          "vector": {
+            "x": -1.5,
+            "y": 1.0,
+            "z": 1.5
+          }
+        },
+        {
+          "id": "c6a470e7-2124-4e65-968f-6214d6cf9c2f",
+          "createdAt": "2026-09-30T09:07:23.2242Z",
+          "definitionUri": "opentrons/opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap/1",
+          "location": {
+            "slotName": "7"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "7"
+            }
+          ],
+          "vector": {
+            "x": -0.7,
+            "y": 0.5,
+            "z": 1.5
+          }
+        },
+        {
+          "id": "bc94eca7-2bd3-4208-958e-eb3d567e38aa",
+          "createdAt": "2026-09-30T09:07:23.225084Z",
+          "definitionUri": "opentrons/opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap/1",
+          "location": {
+            "slotName": "8"
+          },
+          "locationSequence": [
+            {
+              "kind": "onAddressableArea",
+              "addressableAreaName": "8"
+            }
+          ],
+          "vector": {
+            "x": 2.0000000000000004,
+            "y": -0.30000000000000004,
+            "z": 1.5
+          }
+        }
+      ]
+    },
+    "links": {
+      "current": {
+        "href": "/maintenance_runs/e6d37afb-29ca-495d-a51a-5b38c3475cb9"
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "deck": {
+    "deckCalibrationData": {
+      "type": "attitude",
+      "matrix": [
+        [
+          0.9989,
+          0.0032,
+          0
+        ],
+        [
+          -0.0008,
+          1.0016,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "lastModified": "2026-09-30T13:48:12.136492Z",
+      "pipetteCalibratedWith": "PIP-LEFT-P20",
+      "tiprack": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a",
+      "source": "user",
+      "status": {
+        "markedBad": false,
+        "source": null,
+        "markedAt": null
+      }
+    },
+    "isDeckCalibrated": true,
+    "markedBad": false
+  },
+  "pipetteOffset": [
+    {
+      "id": "PIP-RIGHT-P300&right",
+      "pipette": "PIP-RIGHT-P300",
+      "mount": "right",
+      "offset": [
+        -0.1999999999999993,
+        -5.799999999999997,
+        -0.8999999999999844
+      ],
+      "tiprack": "ed323db6ca1ddf197aeb20667c1a7a91c89cfb2f931f45079d483928da056812",
+      "tiprackUri": "opentrons/opentrons_96_tiprack_300ul/1",
+      "lastModified": "2026-09-30T13:57:13.636742Z",
+      "source": "user",
+      "status": {
+        "markedBad": false,
+        "source": null,
+        "markedAt": null
+      }
+    },
+    {
+      "id": "PIP-LEFT-P20&left",
+      "pipette": "PIP-LEFT-P20",
+      "mount": "left",
+      "offset": [
+        -1.7763568394002505e-15,
+        -5.199999999999996,
+        -0.799999999999983
+      ],
+      "tiprack": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a",
+      "tiprackUri": "opentrons/opentrons_96_tiprack_20ul/1",
+      "lastModified": "2026-09-30T13:50:52.841900Z",
+      "source": "user",
+      "status": {
+        "markedBad": false,
+        "source": null,
+        "markedAt": null
+      }
+    }
+  ],
+  "tipLength": [
+    {
+      "id": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a&PIP-LEFT-P20",
+      "tipLength": 30.850000000000037,
+      "tiprack": "60e107ba7e6e5d23beefe9f0c888f860f7b923c71906aaa5e7f460ab25c4f38a",
+      "pipette": "PIP-LEFT-P20",
+      "lastModified": "2026-02-25T09:35:13.193026Z",
+      "source": "user",
+      "status": {
+        "markedBad": false,
+        "source": null,
+        "markedAt": null
+      },
+      "uri": "opentrons/opentrons_96_tiprack_20ul/1"
+    },
+    {
+      "id": "ed323db6ca1ddf197aeb20667c1a7a91c89cfb2f931f45079d483928da056812&PIP-RIGHT-P300",
+      "tipLength": 48.70000000000016,
+      "tiprack": "ed323db6ca1ddf197aeb20667c1a7a91c89cfb2f931f45079d483928da056812",
+      "pipette": "PIP-RIGHT-P300",
+      "lastModified": "2026-06-15T14:24:14.233890Z",
+      "source": "user",
+      "status": {
+        "markedBad": false,
+        "source": null,
+        "markedAt": null
+      },
+      "uri": "opentrons/opentrons_96_tiprack_300ul/1"
+    }
+  ]
+}
