@@ -207,7 +207,9 @@
         "not_given_to_agent": [
           "the physical tube bottom position",
           "which step to stop at",
-          "the number of steps needed"
+          "how many steps are needed",
+          "the step schedule",
+          "the stopping rule"
         ],
         "feedback_buckets_mm": {
           "远": "clearance > 20",
@@ -216,14 +218,12 @@
           "快贴底": "1 < clearance <= 2",
           "触底风险": "clearance <= 1"
         },
-        "feedback_content": "the sandbox returns only the bucket name, never a distance value",
         "step_limit_mm": 10,
         "step_schedule_mm": {
           "远": 10,
-          "近": 5,
+          "近": 3,
           "很近了": 1
         },
-        "stop_rule": "stop on entering 快贴底, which puts the tip end 1 to 2 mm above the physical bottom",
         "acceptance_window_mm": [
           1,
           3
@@ -231,23 +231,31 @@
         "hidden_from_agent": [
           "the physical tube bottom position",
           "the scorer"
-        ]
+        ],
+        "step_schedule_is_reference_only": "the step schedule and the stopping rule belong to the reference solution, not to the agent input. Grading checks the three properties below, not equality with the reference schedule.",
+        "feedback_content": "the sandbox returns only the bucket name, never a distance value"
       },
       "official_reference": {
         "language": "python protocol_api 2.16",
-        "code": "    p20.pick_up_tip()\n    d = 0.0\n    step = 10.0\n    while True:\n        d += step\n        p20.move_to(rack3[\"A1\"].top(z=-d))      # descend d mm below the well top\n        fb = probe()                             # 远 / 近 / 很近了 / 快贴底 / 触底风险\n        if fb == \"远\":\n            step = 10.0\n        elif fb == \"近\":\n            step = 5.0\n        elif fb == \"很近了\":\n            step = 1.0\n        elif fb == \"快贴底\":\n            break\n        else:\n            raise RuntimeError(\"probe overshot the tube bottom\")\n    p20.aspirate(PEPTIDE_VOL_UL, rack3[\"A1\"].top(z=-d))\n    p20.drop_tip()",
-        "core_point": "all agent actions go through the official API; descending is expressed as well.top(z=-d). probe() is a sandbox-provided observation outside the official package.",
+        "code": "    p20.pick_up_tip()\n    d = 0.0\n    step = 10.0\n    while True:\n        d += step\n        p20.move_to(rack3[\"A1\"].top(z=-d))      # descend d mm below the well top\n        fb = probe()                             # 远 / 近 / 很近了 / 快贴底 / 触底风险\n        if fb == \"远\":\n            step = 10.0\n        elif fb == \"近\":\n            step = 3.0\n        elif fb == \"很近了\":\n            step = 1.0\n        elif fb == \"快贴底\":\n            break\n        else:\n            raise RuntimeError(\"probe overshot the tube bottom\")\n    p20.aspirate(PEPTIDE_VOL_UL, rack3[\"A1\"].top(z=-d))\n    p20.drop_tip()",
+        "core_point": "all agent actions go through the official API; descending is expressed as well.top(z=-d). probe() is a sandbox-provided observation outside the official package. The step schedule and the stop rule shown here are the reference solution, not part of the agent input.",
         "placeholders": {
           "PEPTIDE_VOL_UL": "the transfer volume"
         }
       },
       "grading": [
-        "stop position: the tip end must be 1 to 3 mm above the physical tube bottom. With the buckets above, stopping on entering 快贴底 lands inside that window.",
+        "stop position: the tip end must be 1 to 3 mm above the physical tube bottom.",
         "process: the descent must be staged. No single step above 10 mm, and the step size must not grow once a closer bucket is entered. A single-shot descent, or a step size that grows and shrinks, fails.",
-        "no contact: entering 触底风险, or touching the bottom, fails."
+        "no contact: entering 触底风险, or touching the bottom, fails.",
+        "grading does NOT require the same step schedule as the reference implementation; any walk that satisfies the constraints and stops inside the window passes."
       ],
       "design_coupling": "the bucket boundaries and the acceptance window are coupled: 1 to 2 mm is its own bucket so that stopping on entry always lands within 1 to 3 mm. Changing the acceptance window requires changing the boundaries, otherwise the task becomes unsolvable or trivial.",
-      "basis": "ORIGINAL-RECORDS.md 记录二: in the original run the tube bottom was found by staged descent plus visual judgement; here the eye is replaced by the coarse buckets"
+      "basis": "ORIGINAL-RECORDS.md 记录二: in the original run the tube bottom was found by staged descent plus visual judgement; here the eye is replaced by the coarse buckets",
+      "design_notes": [
+        "bucket boundaries and the acceptance window are coupled: 1 to 2 mm is its own bucket so that stopping on entry always lands within 1 to 3 mm. Changing the acceptance window requires changing the boundaries.",
+        "the step schedule and the stopping rule are deliberately kept out of the agent input: handing them over lets the agent pass by following the table, which does not test whether it can choose its own step size.",
+        "the reference uses 10 / 3 / 1, not 10 / 5 / 1: when the clearance is just above 5 mm (bucket 近), a 5 mm step lands inside 1 mm, i.e. straight into 触底风险. Over 200 random tube-bottom positions (12 to 75 mm below the model mouth), 10/5/1 produces 37 contacts; 10/3/1 produces none and still satisfies both constraints."
+      ]
     }
   ],
   "reading_notes": [

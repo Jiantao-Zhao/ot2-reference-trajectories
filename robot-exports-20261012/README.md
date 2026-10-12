@@ -36,7 +36,8 @@
 | `custom_labware/custom_24_tuberack_eppendorf_2ml_slot3_pitch19p69.json` | 槽 3 自定义耗材定义，完整文件 | 3 |
 | `calibration_at_mark.json` | **标注那一刻**的机器标定快照（六个端点） | 5 |
 | `calibration_after_recal.json` | **重标之后**的机器标定导出 | 5 |
-| `labware_offsets.json` | labware offset 真源，含 `machine_calibration_at_mark` 与 `protocol_params` | 5 |
+| `labware_offsets.json` | labware offset 真源（09-30 版），含 `machine_calibration_at_mark` 与 `protocol_params` | 5 |
+| `labware_offsets_20260929.json` | 09-29 版（jog 累加）的完整结构 | 5 |
 | `calibration_log.md` | 标定日志：为什么 offset=0、为什么旧值是错的 | 5 的上下文 |
 | `run_records.md` | 能取到的运行记录，以及取不到的部分与原因 | 4 / 6 |
 
@@ -52,5 +53,10 @@
 ## 没有的东西
 
 - **历史 run 的命令记录取不到**：这台机器的维护运行用完即弃。2026-09-30 探测过 7 个 run，`/runs/{id}` 与 `/runs/{id}/commands` **全部返回 404**。所以请求单第 4 项（`ac20a023` 的完整命令）拿不到，只能给当时落进日志的部分，见 `run_records.md`。
-- **09-29 那一版 `labware_offsets.json`**（jog 累加版）：这个包里只有 09-30 版。09-29 的值以对照形式记录在 `calibration_log.md` 里。
-- 标准 24 孔架定义、甲板原点表、标定位置数据等：在旧工作目录里，本次未一并带出。
+- **标准 24 孔架定义、甲板原点表**：这两个文件在控制电脑的旧工作目录里，本次未带出。已知它们的存在与大小（标准 24 孔架定义 4854 B、甲板原点表 3051 B，均通过 JSON 有效性检查），但内容不在任何记录里，无法从日志恢复。
+
+## 关于 09-29 那一版 offset
+
+`labware_offsets_20260929.json` 是从本地会话日志里恢复的，原始文件已不在卷上。它是 09-30 标定日志判定为"错误累加"的那一版（槽 3 `−30`、槽 6/7/8 约 `+1.0~1.5`，槽 4 `+25.5`）。与 `labware_offsets.json`（09-30 版，槽 3/6/7/8 全为 `(0,0,0)`）对照看，能直接看出约 30 mm 的基准差落在哪里。
+
+恢复出来的内容带一个 `_recovered_from` 字段注明来源。
