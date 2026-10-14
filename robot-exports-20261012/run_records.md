@@ -60,6 +60,8 @@ e6d37afb  status=404  commands=None
 
 同样是 150 mm：在槽 3 **通过**，在槽 7 **被拒**。按 `FailedToPlanMoveError / 4000 / Arc out of bounds in the Z-axis` 的语义，弧线是否可行取决于起点终点的几何，不只是弧高那个数字。两次运行套用的 labware offset 不同（见下），这可能是一个切入点，但历史记录里没有做过受控对比，**这里不下结论**。
 
+> 补充：已在官方规划器里复现，原因是引擎当时是否认为挂着吸头（槽 3 那次是运行里的第一次调用，引擎里还没有吸头；槽 7 那次槽 3 的吸头还挂着），见 [../analysis/arc-limit-replay.md](../analysis/arc-limit-replay.md)。
+
 ## 三、逐个 run 的已知信息
 
 ### `ac20a023-1815-4a08-a9b1-61880ce9cb15`
