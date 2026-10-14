@@ -42,6 +42,8 @@
 
 Z 行程上限 172.15 mm。弧线会不会被拒，取决于起点终点的几何，不只是弧高那个数字。实测有两处被拒：一处弧高 180，改用 150 后通过；另一处弧高 150，改用 130 后通过。所以不能假定某个固定数值一定可行，要取一个保守的 `minimum_z_height`。越界时的异常是 FailedToPlanMoveError，errorCode 4000，detail 为 Arc out of bounds in the Z-axis。
 
+> 补充：这五次结果已在官方规划器里复现（5/5）。原因是引擎当时是否认为挂着吸头：没挂吸头时 `minimumZHeight` 上限约 179.6 mm，挂着 20 µL 吸头时约 148.7 mm，与目标槽无关。见 [analysis/arc-limit-replay.md](analysis/arc-limit-replay.md)。
+
 #### 官方参考实现
 
 ```python
@@ -204,6 +206,8 @@ robotType                 OT-2
 组合是允许的，顺序、循环、条件、参数、目标坐标都由写协议的人决定。不允许的是发明新的动作：不能用坐标拼一个库里已有的动作，不能绕开库直接发运动命令，不能改库或抄库，不能用未文档化的接口。
 
 判定只用官方工具：`opentrons analyze` 与 `opentrons simulate`。
+
+> 版本说明：机器是 26.6.0（opentrons-ot2 版本线，不在 PyPI 上）。PyPI 上的 `opentrons` 从 9.x 起，这两个命令都会拒绝 OT-2 的 protocol；8.8.2 是 PyPI 上还接受 OT-2 的最新版本。
 
 ## 读的时候注意
 

@@ -85,7 +85,8 @@
       "recomputing well geometry from labware definitions",
       "modifying or copying the library",
       "using undocumented interfaces"
-    ]
+    ],
+    "analyzer_version_note": "the robot runs 26.6.0 (opentrons-ot2 release line, not on PyPI). PyPI opentrons 9.x and later refuse OT-2 protocols in both analyze and simulate; 8.8.2 is the newest PyPI release that still accepts them."
   },
   "environment_constants": {
     "tip_reference_semantics": "with a tip attached the engine positions the tip end; offsets are relative to well top",
@@ -118,7 +119,18 @@
           130
         ]
       ],
-      "accepted_in_both_observed_instances": 130
+      "accepted_in_both_observed_instances": 130,
+      "replay": {
+        "result": "all five recorded outcomes reproduce in the official planner (opentrons 8.8.2)",
+        "cause": "whether the engine believed a tip was attached: each script call issued the drop-tip move before picking up a tip; the slot-3 call was the first in run ac20a023 (no tip), the slot-7 call followed with the slot-3 tip still attached",
+        "highest_accepted_minimum_z_height_mm": {
+          "no_tip": 179.59,
+          "tip_20ul_definition_length": 148.65,
+          "tip_20ul_calibrated_30p85": 148.74
+        },
+        "script": "tools/replay_arc_records.py",
+        "details": "analysis/arc-limit-replay.md"
+      }
     }
   },
   "operations": [
